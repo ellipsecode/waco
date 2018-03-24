@@ -1,0 +1,40 @@
+{
+	"JDBCSystemResources" : {
+		"testDatasource" : {
+			"JDBCResource" : {
+				"testDatasource" : {
+					"Name" : "testDataSource",
+					"JDBCDataSourceParams" : {
+						"testDatasource" : {
+							"JNDINames" : [
+								"jdbc/testDataSource"
+							],
+							"GlobalTransactionsProtocol" : "OnePhaseCommit"
+						}
+					},
+					"JDBCDriverParams" : {
+						"testDatasource" : {
+							"Url" : "jdbc:oracle:thin:@localhost:1521/XE",
+							"DriverName" : "oracle.jdbc.xa.client.OracleXADataSource",
+							"Password" : "dbpassword",
+							"Properties" : {
+								"testDataSource" : {
+									"Properties" : {
+										"user" : {
+											"Value" :"dbuser"
+										}
+									}
+								}
+							}
+						}
+					},
+					"JDBCConnectionPoolParams" : {
+						"testDatasource" : {
+							"TestTableName" : "SQL SELECT * FROM DUAL"
+						}
+					}
+				}
+			}
+		}
+	}
+}
