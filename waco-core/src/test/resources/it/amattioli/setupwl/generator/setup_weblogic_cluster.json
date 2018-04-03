@@ -1,0 +1,7 @@
+{
+	"Clusters" : {
+		"%%%CO-ApplicationLayer" : {
+			"ClusterMessagingMode" : "unicast"
+		}
+	} 
+}

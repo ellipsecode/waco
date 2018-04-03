@@ -1,0 +1,22 @@
+{
+	"JMSSystemResources" : {
+		"%%%JMSModule-Cashout" : {
+			"JMSResource" : {
+				"%%%JMSModule-Cashout" : {
+					"ForeignServers" : {
+						"%%%SIMP-FS-TEST" : {
+							"JNDIProperties" : {
+								"datasource" : {
+									"Key" : "datasource",
+									"Value" : "jdbc/simpdb"
+								}
+							},
+							"ConnectionURL" : "",
+							"InitialContextFactory" : "oracle.jms.AQjmsInitialContextFactory"
+						}
+					}
+				}
+			}
+		}
+	}
+}
