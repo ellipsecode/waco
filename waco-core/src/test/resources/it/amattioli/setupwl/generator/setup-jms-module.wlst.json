@@ -1,0 +1,44 @@
+{
+	"JMSSystemResource" : {
+		"Test-JMSModule" : {
+			"Targets" : ["/Clusters/Test-Cluster"],
+			"SubDeployments" : {
+				"Test-Subdeployment" : {
+					"Targets" : ["/JMS-Servers/Test-JMSServer"]
+				}
+			},
+			"JMSResource" : {
+				"Test-JMSModule" : {
+					"ConnectionFactories" : {
+						"Test-ConnectionFactory" : {
+							"JNDIName" : "jms/test-connectionFactory",
+							"SubDeploymentName" : "Test-Subdeployment",
+							"TransactionParams" : {
+								"Test-ConnectionFactory" : {
+									"XAConnectionFactoryEnabled" : true
+								}
+							}
+						}
+					},
+					"Queues" : {
+						"test-queue" : {
+							"JNDIName" : "jms/test-queue",
+							"SubDeploymentName" : "Test-Subdeployment",
+							"DeliveryFailureParams" : {
+								"test-queue" : {
+									"RedeliveryLimit" : 4,
+									"ErrorDestination" : "/JMSSystemResource/Test-JMSModule/JMSResource/TestJMSModule/Queues/test-queue"
+								}
+							},
+							"DeliveryParamsOverrides" : {
+								"test-queue" : {
+									"TimeToDeliver" : 4500
+								}
+							} 
+						}
+					}
+				}
+			}
+		}
+	}
+}

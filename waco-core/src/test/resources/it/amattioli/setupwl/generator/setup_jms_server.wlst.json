@@ -1,0 +1,7 @@
+{
+	"JMSServers" : {
+		"Test-JMSServer" : {
+			"Targets" : ["/Clusters/Test-Cluster"]
+		}
+	}
+}
