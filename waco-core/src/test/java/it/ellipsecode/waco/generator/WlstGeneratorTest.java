@@ -1,9 +1,11 @@
-package it.amattioli.setupwl.generator;
+package it.ellipsecode.waco.generator;
 
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 
 import org.junit.Test;
+
+import it.ellipsecode.waco.generator.WlstGenerator;
 
 public class WlstGeneratorTest {
 

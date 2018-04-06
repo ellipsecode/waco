@@ -1,4 +1,4 @@
-package it.amattioli.setupwl.generator;
+package it.ellipsecode.waco.generator;
 
 import java.io.IOException;
 import java.io.Reader;
