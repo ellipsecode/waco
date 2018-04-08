@@ -1,17 +1,19 @@
 package it.ellipsecode.waco.generator;
 
 import java.io.Writer;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.json.JsonValue;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 public class ConfigGenerators {
 	public static ConfigGenerator DEFAULT = new DefaultGenerator();
 	
-	private Map<String, ConfigGenerator> generators = new HashMap<String, ConfigGenerator>() {{
-		put("JDBCSystemResources", new DatasourceGenerator());
-	}};
+	private Map<String, ConfigGenerator> generators = MapUtils.hashMap(
+		Pair.of("JDBCSystemResources", new DatasourceGenerator()),
+		Pair.of("JMSServers",          new JMSServerGenerator())
+	);
 	
 	public void generate(String key, JsonValue jsonValue, Writer writer) {
 		if (generators.containsKey(key)) {

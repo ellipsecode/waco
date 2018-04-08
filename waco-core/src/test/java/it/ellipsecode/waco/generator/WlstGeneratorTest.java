@@ -31,5 +31,14 @@ public class WlstGeneratorTest {
 		generator.generate(jsonReader, scriptWriter);
 		assertSameContent("expected_datasource.wlst", scriptWriter);
 	}
-	
+
+	@Test
+	public void testJMSServer() throws Exception {
+		Reader jsonReader = readFile("setup_jms_server.wlst.json");
+		StringWriter scriptWriter = new StringWriter(); 
+		WlstGenerator generator = new WlstGenerator();
+		generator.generate(jsonReader, scriptWriter);
+		System.out.println(scriptWriter.toString());
+//		assertSameContent("expected_jms_server.wlst", scriptWriter);
+	}
 }
