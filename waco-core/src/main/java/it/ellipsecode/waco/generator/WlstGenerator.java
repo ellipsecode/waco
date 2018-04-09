@@ -11,27 +11,28 @@ import javax.json.JsonReader;
 public class WlstGenerator {
 
 	public void generate(Reader reader, Writer writer) {
-		generateHeader(writer);
+		WlstWriter wlst = new WlstWriter(writer);
+		generateHeader(wlst);
 		try (JsonReader jsonReader = Json.createReader(reader)) {
 			JsonObject jsonConfig = jsonReader.readObject();
-			ConfigGenerators.DEFAULT.generate(jsonConfig, writer);
+			ConfigGenerators.DEFAULT.generate(jsonConfig, wlst);
 		}
-		generateFooter(writer);
+		generateFooter(wlst);
 	}
 	
-	private void generateHeader(Writer writer) {
+	private void generateHeader(WlstWriter writer) {
 		try {
-			writer.write("edit()\n");
-			writer.write("startEdit()\n");
+			writer.writeln("edit()");
+			writer.writeln("startEdit()");
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 	
-	private void generateFooter(Writer writer) {
+	private void generateFooter(WlstWriter writer) {
 		try {
-			writer.write("save()\n");
-			writer.write("activate()\n");
+			writer.writeln("save()");
+			writer.writeln("activate()");
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

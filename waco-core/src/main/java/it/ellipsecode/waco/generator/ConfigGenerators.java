@@ -1,6 +1,5 @@
 package it.ellipsecode.waco.generator;
 
-import java.io.Writer;
 import java.util.Map;
 
 import javax.json.JsonValue;
@@ -15,7 +14,7 @@ public class ConfigGenerators {
 		Pair.of("JMSServers",          new JMSServerGenerator())
 	);
 	
-	public void generate(String key, JsonValue jsonValue, Writer writer) {
+	public void generate(String key, JsonValue jsonValue, WlstWriter writer) {
 		if (generators.containsKey(key)) {
 			generators.get(key).generate(jsonValue.asJsonObject(), writer);
 		} else {

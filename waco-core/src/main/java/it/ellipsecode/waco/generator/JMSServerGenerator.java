@@ -1,26 +1,27 @@
 package it.ellipsecode.waco.generator;
 
 import java.io.IOException;
-import java.io.Writer;
 
 import javax.json.JsonObject;
 
 public class JMSServerGenerator implements ConfigGenerator {
 
 	@Override
-	public void generate(JsonObject jsonConfig, Writer writer) {
+	public void generate(JsonObject jsonConfig, WlstWriter writer) {
 		jsonConfig.forEach((key, value) -> {
 			generateJMSServer(key, value.asJsonObject(), writer);
 		});
 	}
 	
-	private void generateJMSServer(String name, JsonObject jsonConfig, Writer writer) {
+	private void generateJMSServer(String name, JsonObject jsonConfig, WlstWriter wlst) {
 		try {
-			writer.write("if (ls().find('"+name+"') == -1):\n");
-			writer.write("  create('"+name+"', 'JMSServer')\n");
-			writer.write("cd('"+name+"')\n");
-			ConfigGenerators.DEFAULT.generate(jsonConfig, writer);
-			writer.write("cd('..')\n");
+			wlst.writeln("if (ls().find('"+name+"') == -1):");
+			wlst.indent();
+				wlst.writeln("create('"+name+"', 'JMSServer')");
+			wlst.endIndent();
+			wlst.cd(name);
+			ConfigGenerators.DEFAULT.generate(jsonConfig, wlst);
+			wlst.cdUp();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
