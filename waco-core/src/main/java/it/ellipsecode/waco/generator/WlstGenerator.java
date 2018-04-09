@@ -7,70 +7,32 @@ import java.io.Writer;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import javax.json.JsonValue.ValueType;
 
 public class WlstGenerator {
 
 	public void generate(Reader reader, Writer writer) {
-		generateHeader(writer);
+		WlstWriter wlst = new WlstWriter(writer);
+		generateHeader(wlst);
 		try (JsonReader jsonReader = Json.createReader(reader)) {
 			JsonObject jsonConfig = jsonReader.readObject();
-			generateConfig(jsonConfig, writer);
+			ConfigGenerators.DEFAULT.generate(jsonConfig, wlst);
 		}
-		generateFooter(writer);
+		generateFooter(wlst);
 	}
 	
-	private void generateHeader(Writer writer) {
+	private void generateHeader(WlstWriter writer) {
 		try {
-			writer.write("edit()\n");
-			writer.write("startEdit()\n");
+			writer.writeln("edit()");
+			writer.writeln("startEdit()");
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 	
-	private void generateConfig(JsonObject jsonConfig, Writer writer) {
-		jsonConfig.forEach((key, value) -> {
-			try {
-				if (value.getValueType() == ValueType.STRING) {
-					writer.write("set('"+key+"',"+value+")\n");
-				} else if (value.getValueType() == ValueType.OBJECT) {
-					writer.write("cd('"+key+"')\n");
-					if ("JDBCSystemResources".equals(key)) {
-						generateDatasources(value.asJsonObject(), writer);
-					} else {
-						generateConfig(value.asJsonObject(), writer);
-					}
-					writer.write("cd('..')\n");
-				}
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-		});
-	}
-	
-	private void generateDatasources(JsonObject jsonConfig, Writer writer) {
-			jsonConfig.forEach((key, value) -> {
-				generateDatasource(key, value.asJsonObject(), writer);
-			});
-	}
-	
-	private void generateDatasource(String name, JsonObject jsonConfig, Writer writer) {
+	private void generateFooter(WlstWriter writer) {
 		try {
-			writer.write("if (ls().find('"+name+"') == -1):\n");
-			writer.write("  cmo.createJDBCSystemResource('"+name+"')\n");
-			writer.write("cd('"+name+"')\n");
-			generateConfig(jsonConfig, writer);
-			writer.write("cd('..')\n");
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
-	
-	private void generateFooter(Writer writer) {
-		try {
-			writer.write("save()\n");
-			writer.write("activate()\n");
+			writer.writeln("save()");
+			writer.writeln("activate()");
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
