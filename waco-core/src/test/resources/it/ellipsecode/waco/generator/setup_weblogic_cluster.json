@@ -1,7 +1,8 @@
 {
 	"Clusters" : {
-		"%%%CO-ApplicationLayer" : {
+		"TestCO-ApplicationLayer" : {
 			"ClusterMessagingMode" : "unicast"
 		}
+		//TODO setCoherenceClusterSystemResource
 	} 
 }

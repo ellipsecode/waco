@@ -1,19 +1,14 @@
 {
 	"CoherenceClusterSystemResources" : {
-		"%%%Coherence-Cashout" : {
+		"TestCoherence-Cashout" : {
 			"CoherenceClusterResource" : {
-				"%%%Coherence-Cashout" : {
+				"TestCoherence-Cashout" : {
 					"CoherenceClusterParams" : {
-						"%%%Coherence-Cashout" : {
+						"TestCoherence-Cashout" : {
 							"Transport" : "udp",
 							
 						}
 					}
-				}
-			},
-			"Targets" : {
-				"%%ManagedAppServer-CO1" :{
-					//TODO CAPIRE COME FARE IL GET MBEAN
 				}
 			}
 		}

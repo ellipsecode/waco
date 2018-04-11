@@ -1,12 +1,12 @@
 {
 	"JMSSystemResources" : {
-		"%%%JMSModule-Cashout" : {
+		"TestJMSModule-Cashout" : {
 			"JMSResource" : {
-				"%%%JMSModule-Cashout" : {
+				"TestJMSModule-Cashout" : {
 					"ForeignServers" : {
-						"%%%SIMP-FS-TEST" : {
+						"TestSIMP-FS-TEST" : {
 							"ForeignConnectionFactories" : {
-								"%%%ForeignConnectionFactory-0" : {
+								"TestForeignConnectionFactory-0" : {
 									"LocalJNDIName" : "PROVA",
 									"RemoteJNDIName" : "XATopicConnectionFactory"
 								}
