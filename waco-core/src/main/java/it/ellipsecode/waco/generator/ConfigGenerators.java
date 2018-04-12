@@ -11,8 +11,11 @@ public class ConfigGenerators {
 	
 	private Map<String, ConfigGenerator> generators = MapUtils.hashMap(
 		Pair.of("JDBCSystemResources", new DatasourceGenerator()),
-		Pair.of("JMSServers",          new JMSServerGenerator())
+		Pair.of("JMSServers",          new JMSServerGenerator()),
+		Pair.of("Servers",			   new ServerGenerator())
 	);
+	
+	
 	
 	public void generate(String key, JsonValue jsonValue, WlstWriter writer) {
 		if (generators.containsKey(key)) {
