@@ -3,6 +3,6 @@
 		"TestCO-ApplicationLayer" : {
 			"ClusterMessagingMode" : "unicast"
 		}
-		//TODO setCoherenceClusterSystemResource
+		
 	} 
 }
