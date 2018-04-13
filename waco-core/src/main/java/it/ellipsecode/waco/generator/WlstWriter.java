@@ -27,6 +27,14 @@ public class WlstWriter {
 		writer.write('\n');
 	}
 	
+	public void endLine() throws IOException {
+		writer.write('\n');
+	}
+	
+	public void write(String content) throws IOException {
+		writer.write(content);
+	}
+	
 	public void cd(String name) throws IOException {
 		writeln("cd('"+name+"')");
 	}

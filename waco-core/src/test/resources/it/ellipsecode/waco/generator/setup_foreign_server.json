@@ -1,10 +1,10 @@
 {
 	"JMSSystemResources" : {
-		"%%%JMSModule-Cashout" : {
+		"TestJMSModule-Cashout" : {
 			"JMSResource" : {
-				"%%%JMSModule-Cashout" : {
+				"TestJMSModule-Cashout" : {
 					"ForeignServers" : {
-						"%%%SIMP-FS-TEST" : {
+						"TestSIMP-FS-TEST" : {
 							"JNDIProperties" : {
 								"datasource" : {
 									"Key" : "datasource",

@@ -1,12 +1,12 @@
 {
 	"JMSSystemResources" : {
-		"%%%JMSModule-Cashout" : {
+		"TestJMSModule-Cashout" : {
 			"JMSResource" : {
-				"%%%JMSModule-Cashout" : {
+				"TestJMSModule-Cashout" : {
 					"ForeignServers" : {
-						"%%%SIMP-FS-TEST" : {
+						"TestSIMP-FS-TEST" : {
 							"ForeignDestinations" : {
-								"%%%Destination-Name" : {
+								"Destination-Name" : {
 									"LocalJNDIName" : "jms/info_request_topic",
 									"RemoteJNDIName" : "Topics/INFO_REQUEST_TOPIC"
 								}

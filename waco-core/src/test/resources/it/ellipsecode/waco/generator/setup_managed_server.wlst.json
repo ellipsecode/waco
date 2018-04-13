@@ -1,0 +1,9 @@
+{
+	"Servers" : {
+		"TestManagedAppServer-CO1" : {
+			"Machine" : "REF#Local_machine",
+			"Cluster" : "REF#TestCO-ApplicationLayer",
+			"ListenPort" : "7003"
+		}
+	}
+}
