@@ -1,7 +1,7 @@
 {
 	"JMSServers" : {
 		"Test-JMSServer" : {
-			"Targets" : ["REF#/Clusters/Test-Cluster","REF#/Clusters/Test2-Cluster""]
+			"Targets" : ["REF#/Clusters/Test-Cluster","REF#/Clusters/Test2-Cluster"]
 		}
 	}
 }
