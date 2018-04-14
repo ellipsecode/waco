@@ -1,6 +1,9 @@
 package it.ellipsecode.waco.generator;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.json.JsonArray;
@@ -18,7 +21,7 @@ public class DefaultGenerator implements ConfigGenerator {
 			try {
 				if (value.getValueType() == ValueType.STRING) {
 					String stringValue;
-					if (value.toString().startsWith(GET_MBEAN_REFERENCE)) {
+					if (isReference(value)) {
 						stringValue = generateMBeanReference(key, value);
 					} else {
 						stringValue = value.toString();
@@ -29,12 +32,16 @@ public class DefaultGenerator implements ConfigGenerator {
 					generators.generate(key, value, wlst);
 					wlst.cdUp();
 				} else if (value.getValueType() == ValueType.ARRAY) {
-					wlst.writeln("set('" + key + "'," + generateArrayReferences(key, value) + ")");
+					wlst.writeln("set('" + key + "'," + generateArray(key, value) + ")");
 				}
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
 		});
+	}
+
+	private boolean isReference(JsonValue value) {
+		return value.toString().startsWith(GET_MBEAN_REFERENCE);
 	}
 
 	private String generateMBeanReference(String key, JsonValue value) {
@@ -43,23 +50,37 @@ public class DefaultGenerator implements ConfigGenerator {
 		return mBeanReference;
 	}
 
-	private String generateArrayReferences(String key, JsonValue value) {
+	private String generateArray(String key, JsonValue value) {
 		JsonArray array = value.asJsonArray();
+		Set<String> arrayTypes = array.stream().map(this::arrayElementType).collect(Collectors.toSet());
+		if (arrayTypes.size() != 1) {
+			throw new RuntimeException("Multiple array type");
+		}
+		String arrayType = arrayTypes.iterator().next();
 		return array.stream()
-		.map(element -> arrayReference(key, element))
-		.collect(Collectors.joining(",", "jarray.array([", " ], ObjectName))"));
+		.map(element -> arrayElement(key, element))
+		.collect(Collectors.joining(",", "jarray.array([", " ], "+arrayType+")"));
+	}
+	
+	private String arrayElementType(JsonValue value) {
+		if (isReference(value)) {
+			return "ObjectName";
+		} else {
+			return "String";
+		}
 	}
 		
-	private String arrayReference(String key, JsonValue element) {
+	private String arrayElement(String key, JsonValue element) {
 		if (element.getValueType() == ValueType.STRING) {
-			String ref = element.toString().startsWith(GET_MBEAN_REFERENCE)
-					? element.toString().replace(GET_MBEAN_REFERENCE, "") : element.toString();
-
-			return ("ObjectName('com.bea:Name=" + ref + ",Type=" + key + "')"); // TODO
-																					// mappare
-																					// correttamente
-																					// la
-																					// key
+			if (isReference(element)) {
+				return "ObjectName('com.bea:Name=" + element.toString().replace(GET_MBEAN_REFERENCE, "") + ",Type=" + key + "')"; // TODO
+																						// mappare
+																						// correttamente
+																						// la
+																						// key
+			} else {
+				return "String(" + element.toString() + ")";
+			}
 		} else {
 			return "";
 		}
