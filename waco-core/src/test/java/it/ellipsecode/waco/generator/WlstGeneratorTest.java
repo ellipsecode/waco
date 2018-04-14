@@ -29,6 +29,7 @@ public class WlstGeneratorTest {
 		StringWriter scriptWriter = new StringWriter(); 
 		WlstGenerator generator = new WlstGenerator();
 		generator.generate(jsonReader, scriptWriter);
+		System.out.println(scriptWriter.toString());
 		assertSameContent("expected_datasource.wlst", scriptWriter);
 	}
 
