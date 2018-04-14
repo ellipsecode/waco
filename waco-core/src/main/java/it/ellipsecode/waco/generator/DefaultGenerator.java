@@ -16,11 +16,13 @@ public class DefaultGenerator implements ConfigGenerator {
 		jsonConfig.forEach((key, value) -> {
 			try {
 				if (value.getValueType() == ValueType.STRING) {
+					String stringValue;
 					if (value.toString().startsWith(GET_MBEAN_REFERENCE)) {
-						generateMBeanReference(key, value, wlst);
+						stringValue = generateMBeanReference(key, value);
 					} else {
-						wlst.writeln("set('" + key + "'," + value + ")");
+						stringValue = value.toString();
 					}
+					wlst.writeln("set('" + key + "'," + stringValue + ")");
 				} else if (value.getValueType() == ValueType.OBJECT) {
 					wlst.cd(key);
 					generators.generate(key, value, wlst);
@@ -34,14 +36,10 @@ public class DefaultGenerator implements ConfigGenerator {
 		});
 	}
 
-	private void generateMBeanReference(String key, JsonValue value, WlstWriter wlst) {
-		try {
-			String realValue = value.toString().replace(GET_MBEAN_REFERENCE, "");
-			String mBeanReference = "getMBean('/" + mapRootDirectories(key) + "/" + realValue + "')";
-			wlst.writeln("set('" + key + "'," + mBeanReference + ")");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	private String generateMBeanReference(String key, JsonValue value) {
+		String realValue = value.toString().replace(GET_MBEAN_REFERENCE, "");
+		String mBeanReference = "getMBean('/" + mapRootDirectories(key) + "/" + realValue + "')";
+		return mBeanReference;
 	}
 
 	private void generateArrayReferences(String key, JsonValue value, WlstWriter wlst) {
