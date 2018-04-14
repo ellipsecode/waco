@@ -1,6 +1,7 @@
 package it.ellipsecode.waco.generator;
 
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -28,7 +29,7 @@ public class DefaultGenerator implements ConfigGenerator {
 					generators.generate(key, value, wlst);
 					wlst.cdUp();
 				} else if (value.getValueType() == ValueType.ARRAY) {
-					generateArrayReferences(key, value, wlst);
+					wlst.writeln("set('" + key + "'," + generateArrayReferences(key, value) + ")");
 				}
 			} catch (IOException e) {
 				throw new RuntimeException(e);
@@ -42,35 +43,28 @@ public class DefaultGenerator implements ConfigGenerator {
 		return mBeanReference;
 	}
 
-	private void generateArrayReferences(String key, JsonValue value, WlstWriter wlst) {
-		JsonArray array = (JsonArray) value;
-		boolean isFirstRow = true;
-		try {
-			wlst.write("set('" + key + "',jarray.array([");
-			for (JsonValue element : array) {
-				if (!isFirstRow)
-					wlst.write(",");
-				isFirstRow = false;
-				if (element.getValueType() == ValueType.STRING) {
-					String ref = element.toString().startsWith(GET_MBEAN_REFERENCE)
-							? element.toString().replace(GET_MBEAN_REFERENCE, "") : element.toString();
+	private String generateArrayReferences(String key, JsonValue value) {
+		JsonArray array = value.asJsonArray();
+		return array.stream()
+		.map(element -> arrayReference(key, element))
+		.collect(Collectors.joining(",", "jarray.array([", " ], ObjectName))"));
+	}
+		
+	private String arrayReference(String key, JsonValue element) {
+		if (element.getValueType() == ValueType.STRING) {
+			String ref = element.toString().startsWith(GET_MBEAN_REFERENCE)
+					? element.toString().replace(GET_MBEAN_REFERENCE, "") : element.toString();
 
-					wlst.write("ObjectName('com.bea:Name=" + ref + ",Type=" + key + ")"); // TODO
-																							// mappare
-																							// correttamente
-																							// la
-																							// key
-				}
-			}
-			wlst.write(" ], ObjectName))");
-			wlst.endLine();
-		} catch (
-
-		IOException e) {
-			e.printStackTrace();
+			return ("ObjectName('com.bea:Name=" + ref + ",Type=" + key + "')"); // TODO
+																					// mappare
+																					// correttamente
+																					// la
+																					// key
+		} else {
+			return "";
 		}
 	}
-
+	
 	private String mapRootDirectories(String attribute) {
 		switch (attribute) {
 		case "Machine":
