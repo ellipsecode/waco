@@ -50,7 +50,7 @@ public class WlstGeneratorTest {
 		WlstGenerator generator = new WlstGenerator();
 		generator.generate(jsonReader, scriptWriter);
 		System.out.println(scriptWriter.toString());
-		//TODO ASSERT
+		assertSameContent("expected_server.wlst", scriptWriter);
 	}
 	
 	@Test
@@ -60,6 +60,16 @@ public class WlstGeneratorTest {
 		WlstGenerator generator = new WlstGenerator();
 		generator.generate(jsonReader, scriptWriter);
 		System.out.println(scriptWriter.toString());
-		//TODO ASSERT
+		assertSameContent("expected_weblogic_cluster.wlst", scriptWriter);
+	}
+	
+	@Test
+	public void testCoherenceCluster() throws Exception {
+		Reader jsonReader = readFile("setup_coherence_cluster.wlst.json");
+		StringWriter scriptWriter = new StringWriter(); 
+		WlstGenerator generator = new WlstGenerator();
+		generator.generate(jsonReader, scriptWriter);
+		System.out.println(scriptWriter.toString());
+		assertSameContent("expected_coherence_cluster.wlst", scriptWriter);
 	}
 }

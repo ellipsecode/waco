@@ -1,0 +1,12 @@
+edit()
+startEdit()
+cd('Clusters')
+if (ls().find('TestCO-ApplicationLayer') == -1):
+  create('TestCO-ApplicationLayer', 'Cluster')
+cd('TestCO-ApplicationLayer')
+set('ClusterMessagingMode',"unicast")
+set('ClusterAddress',"localhost:7003")
+cd('..')
+cd('..')
+save()
+activate()

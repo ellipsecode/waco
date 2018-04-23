@@ -1,7 +1,8 @@
 {
 	"Clusters" : {
 		"TestCO-ApplicationLayer" : {
-			"ClusterMessagingMode" : "unicast"
+			"ClusterMessagingMode" : "unicast",
+			"ClusterAddress" : "localhost:7003"
 		}
 		
 	} 

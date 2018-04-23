@@ -5,8 +5,7 @@
 				"TestCoherence-Cashout" : {
 					"CoherenceClusterParams" : {
 						"TestCoherence-Cashout" : {
-							"Transport" : "udp",
-							
+							"Transport" : "udp"							
 						}
 					}
 				}
@@ -14,4 +13,3 @@
 		}
 	}
 }
-//TODO setCoherenceClusterSystemResource Nel Cluster Weblogic
