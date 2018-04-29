@@ -13,7 +13,8 @@ public class ConfigGenerators {
 		Pair.of("JDBCSystemResources", new DatasourceGenerator()),
 		Pair.of("JMSServers",          new JMSServerGenerator()),
 		Pair.of("Servers",			   new ServerGenerator()),
-		Pair.of("Clusters",            new ClusterGenerator())
+		Pair.of("Clusters",            new ClusterGenerator()),
+		Pair.of("Properties",          new PropertiesGenerator())
 	);
 	
 	
