@@ -14,7 +14,8 @@ public class ConfigGenerators {
 		Pair.of("JMSServers",          new JMSServerGenerator()),
 		Pair.of("Servers",			   new ServerGenerator()),
 		Pair.of("Clusters",            new ClusterGenerator()),
-		Pair.of("CoherenceClusterSystemResources", new CoherenceClusterGenerator())
+		Pair.of("CoherenceClusterSystemResources", new CoherenceClusterGenerator()),
+		Pair.of("ForeignServers", new JMSForeignServerGenerator())
 	);
 	
 	

@@ -72,4 +72,14 @@ public class WlstGeneratorTest {
 		System.out.println(scriptWriter.toString());
 		assertSameContent("expected_coherence_cluster.wlst", scriptWriter);
 	}
+	
+	@Test
+	public void testJmsForeignServer() throws Exception {
+		Reader jsonReader = readFile("setup_foreign_server.wlst.json");
+		StringWriter scriptWriter = new StringWriter(); 
+		WlstGenerator generator = new WlstGenerator();
+		generator.generate(jsonReader, scriptWriter);
+		System.out.println(scriptWriter.toString());
+		assertSameContent("expected_jmsforeignserver.wlst", scriptWriter);
+	}
 }
