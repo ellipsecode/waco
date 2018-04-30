@@ -82,4 +82,24 @@ public class WlstGeneratorTest {
 		System.out.println(scriptWriter.toString());
 		assertSameContent("expected_jmsforeignserver.wlst", scriptWriter);
 	}
+	
+	@Test
+	public void testJmsForeignConnectionFactory() throws Exception {
+		Reader jsonReader = readFile("setup_foreign_connection_factory.wlst.json");
+		StringWriter scriptWriter = new StringWriter(); 
+		WlstGenerator generator = new WlstGenerator();
+		generator.generate(jsonReader, scriptWriter);
+		System.out.println(scriptWriter.toString());
+		assertSameContent("expected_jmsforeignconnectionfactory.wlst", scriptWriter);
+	}
+	
+	@Test
+	public void testJmsForeignDestination() throws Exception {
+		Reader jsonReader = readFile("setup_foreign_destination.wlst.json");
+		StringWriter scriptWriter = new StringWriter(); 
+		WlstGenerator generator = new WlstGenerator();
+		generator.generate(jsonReader, scriptWriter);
+		System.out.println(scriptWriter.toString());
+		assertSameContent("expected_jmsforeigndestination.wlst", scriptWriter);
+	}
 }
