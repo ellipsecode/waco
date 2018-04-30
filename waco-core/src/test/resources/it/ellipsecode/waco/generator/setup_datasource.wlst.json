@@ -14,9 +14,16 @@
 					},
 					"JDBCDriverParams" : {
 						"testDatasource" : {
-							"Url" : "jdbc:oracle:thin:dbuser@localhost:1521/XE",
+							"Url" : "jdbc:oracle:thin:@localhost:1521/XE",
 							"DriverName" : "oracle.jdbc.xa.client.OracleXADataSource",
-							"Password" : "dbpassword"
+							"Password" : "dbpassword",
+							"Properties": {
+								"testDatasource" : {
+									"Properties" : {
+										"user" : "dbuser"
+									}
+								}
+							}
 						}
 					},
 					"JDBCConnectionPoolParams" : {
