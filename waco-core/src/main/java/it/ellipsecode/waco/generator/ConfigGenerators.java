@@ -12,6 +12,7 @@ public class ConfigGenerators {
 	private Map<String, ConfigGenerator> generators = MapUtils.hashMap(
 		Pair.of("JDBCSystemResources", 				new DatasourceGenerator()),
 		Pair.of("JMSServers",          				new JMSServerGenerator()),
+		Pair.of("JMSSystemResource",          		new JMSModuleGenerator()),
 		Pair.of("Servers",			   				new ServerGenerator()),
 		Pair.of("Clusters",            				new ClusterGenerator()),
 		Pair.of("CoherenceClusterSystemResources", 	new CoherenceClusterGenerator()),
