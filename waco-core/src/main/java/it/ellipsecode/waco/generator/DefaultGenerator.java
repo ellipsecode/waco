@@ -12,6 +12,7 @@ import javax.json.JsonValue.ValueType;
 public class DefaultGenerator implements ConfigGenerator {
 	private ConfigGenerators generators = new ConfigGenerators();
 	private final static String GET_MBEAN_REFERENCE = "REF#";
+	private final static String OBJECT_NAME_REFERENCE = "com.bea:Name";
 
 	@Override
 	public void generate(JsonObject jsonConfig, WlstWriter wlst) {
@@ -42,6 +43,11 @@ public class DefaultGenerator implements ConfigGenerator {
 		String stringValue = removeQuotes(value);
 		return stringValue.startsWith(GET_MBEAN_REFERENCE);
 	}
+	
+	private boolean isObjectName(JsonValue value) {
+		String stringValue = removeQuotes(value);
+		return stringValue.startsWith(OBJECT_NAME_REFERENCE);
+	}
 
 	private String generateMBeanReference(String key, JsonValue value) {
 		String stringValue = removeQuotes(value);
@@ -64,6 +70,8 @@ public class DefaultGenerator implements ConfigGenerator {
 	
 	private String arrayElementType(JsonValue value) {
 		if (isReference(value)) {
+			return "Object";
+		} else if(isObjectName(value)) {
 			return "ObjectName";
 		} else {
 			return "String";
@@ -72,13 +80,10 @@ public class DefaultGenerator implements ConfigGenerator {
 		
 	private String arrayElement(String key, JsonValue element) {
 		if (element.getValueType() == ValueType.STRING) {
-			if (isReference(element)) {
-				String stringElement = removeQuotes(element);
-				return "ObjectName('com.bea:Name=" + stringElement.replace(GET_MBEAN_REFERENCE, "") + ",Type=" + key + "')"; // TODO
-																						// mappare
-																						// correttamente
-																						// la
-																						// key
+			if (isObjectName(element)) {
+				return "ObjectName(str(" + element.toString() + "))";
+			} else if(isReference(element)) {
+				return generateMBeanReference(key, element);
 			} else {
 				return "String(" + element.toString() + ")";
 			}
