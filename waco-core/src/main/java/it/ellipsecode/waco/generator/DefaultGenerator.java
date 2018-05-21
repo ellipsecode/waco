@@ -42,6 +42,10 @@ public class DefaultGenerator implements ConfigGenerator {
 					wlst.cdUp();
 				} else if (value.getValueType() == ValueType.ARRAY) {
 					wlst.writeln("set('" + key + "'," + generateArray(key, value) + ")");
+				} else if (value == JsonValue.TRUE) {
+					wlst.writeln("set('" + key + "', true)");
+				} else if (value == JsonValue.FALSE) {
+					wlst.writeln("set('" + key + "', false)");
 				}
 			} catch (IOException e) {
 				throw new RuntimeException(e);
