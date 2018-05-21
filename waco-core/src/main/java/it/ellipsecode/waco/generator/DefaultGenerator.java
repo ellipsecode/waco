@@ -11,7 +11,7 @@ import javax.json.JsonValue.ValueType;
 
 public class DefaultGenerator implements ConfigGenerator {
 	private ConfigGenerators generators = new ConfigGenerators();
-	private final static String GET_MBEAN_REFERENCE = "\"REF#";
+	private final static String GET_MBEAN_REFERENCE = "REF#";
 
 	@Override
 	public void generate(JsonObject jsonConfig, WlstWriter wlst) {
@@ -39,11 +39,13 @@ public class DefaultGenerator implements ConfigGenerator {
 	}
 
 	private boolean isReference(JsonValue value) {
-		return value.toString().startsWith(GET_MBEAN_REFERENCE);
+		String stringValue = removeQuotes(value);
+		return stringValue.startsWith(GET_MBEAN_REFERENCE);
 	}
 
 	private String generateMBeanReference(String key, JsonValue value) {
-		String realValue = value.toString().replace(GET_MBEAN_REFERENCE, "");
+		String stringValue = removeQuotes(value);
+		String realValue = stringValue.replace(GET_MBEAN_REFERENCE, "");
 		String mBeanReference = "getMBean('/" + mapRootDirectories(key) + "/" + realValue + "')";
 		return mBeanReference;
 	}
@@ -71,7 +73,8 @@ public class DefaultGenerator implements ConfigGenerator {
 	private String arrayElement(String key, JsonValue element) {
 		if (element.getValueType() == ValueType.STRING) {
 			if (isReference(element)) {
-				return "ObjectName('com.bea:Name=" + element.toString().replace(GET_MBEAN_REFERENCE, "") + ",Type=" + key + "')"; // TODO
+				String stringElement = removeQuotes(element);
+				return "ObjectName('com.bea:Name=" + stringElement.replace(GET_MBEAN_REFERENCE, "") + ",Type=" + key + "')"; // TODO
 																						// mappare
 																						// correttamente
 																						// la
@@ -82,6 +85,12 @@ public class DefaultGenerator implements ConfigGenerator {
 		} else {
 			return "";
 		}
+	}
+
+	private String removeQuotes(JsonValue element) {
+		String stringElement = element.toString();
+		stringElement = stringElement.substring(1, stringElement.length()-1);
+		return stringElement;
 	}
 	
 	private String mapRootDirectories(String attribute) {
