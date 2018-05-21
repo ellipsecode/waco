@@ -1,10 +1,14 @@
 package it.ellipsecode.waco.generator;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.json.JsonArray;
+import javax.json.JsonNumber;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
 import javax.json.JsonValue.ValueType;
@@ -25,6 +29,12 @@ public class DefaultGenerator implements ConfigGenerator {
 					} else {
 						stringValue = value.toString();
 					}
+					wlst.writeln("set('" + key + "'," + stringValue + ")");
+				} else if (value.getValueType() == ValueType.NUMBER) {
+					BigDecimal numberValue = ((JsonNumber)value).bigDecimalValue();
+					NumberFormat nf = NumberFormat.getInstance(Locale.ENGLISH);
+					nf.setGroupingUsed(false);
+					String stringValue = nf.format(numberValue);
 					wlst.writeln("set('" + key + "'," + stringValue + ")");
 				} else if (value.getValueType() == ValueType.OBJECT) {
 					wlst.cd(key);
