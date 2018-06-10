@@ -40,7 +40,17 @@ public class WlstGeneratorTest {
 		WlstGenerator generator = new WlstGenerator();
 		generator.generate(jsonReader, scriptWriter);
 		System.out.println(scriptWriter.toString());
-		//assertSameContent("expected_jms_server.wlst", scriptWriter);
+		assertSameContent("expected_jms_server.wlst", scriptWriter);
+	}
+	
+	@Test
+	public void testJMSModule() throws Exception {
+		Reader jsonReader = readFile("setup-jms-module.wlst.json");
+		StringWriter scriptWriter = new StringWriter(); 
+		WlstGenerator generator = new WlstGenerator();
+		generator.generate(jsonReader, scriptWriter);
+		System.out.println(scriptWriter.toString());
+		assertSameContent("expected_jms_module.wlst", scriptWriter);
 	}
 	
 	@Test

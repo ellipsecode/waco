@@ -1,10 +1,10 @@
 {
 	"JMSSystemResource" : {
 		"Test-JMSModule" : {
-			"Targets" : ["/Clusters/Test-Cluster"],
+			"Targets" : ["REF#/Clusters/Test-Cluster"],
 			"SubDeployments" : {
 				"Test-Subdeployment" : {
-					"Targets" : ["/JMS-Servers/Test-JMSServer"]
+					"Targets" : ["REF#/JMS-Servers/Test-JMSServer"]
 				}
 			},
 			"JMSResource" : {
@@ -27,7 +27,7 @@
 							"DeliveryFailureParams" : {
 								"test-queue" : {
 									"RedeliveryLimit" : 4,
-									"ErrorDestination" : "/JMSSystemResource/Test-JMSModule/JMSResource/TestJMSModule/Queues/test-queue"
+									"ErrorDestination" : "REF#/JMSSystemResource/Test-JMSModule/JMSResource/TestJMSModule/Queues/test-queue"
 								}
 							},
 							"DeliveryParamsOverrides" : {

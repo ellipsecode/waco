@@ -66,7 +66,7 @@ public class DefaultGenerator implements ConfigGenerator {
 	private String generateMBeanReference(String key, JsonValue value) {
 		String stringValue = removeQuotes(value);
 		String realValue = stringValue.replace(GET_MBEAN_REFERENCE, "");
-		String mBeanReference = "getMBean('/" + mapRootDirectories(key) + "/" + realValue + "')";
+		String mBeanReference = "getMBean('" + realValue + "')";
 		return mBeanReference;
 	}
 
@@ -110,17 +110,6 @@ public class DefaultGenerator implements ConfigGenerator {
 		String stringElement = element.toString();
 		stringElement = stringElement.substring(1, stringElement.length()-1);
 		return stringElement;
-	}
-	
-	private String mapRootDirectories(String attribute) {
-		switch (attribute) {
-		case "Machine":
-			return "Machines";
-		case "Cluster":
-			return "Clusters";
-		default:
-			return attribute;
-		}
 	}
 
 }
