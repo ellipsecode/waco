@@ -1,0 +1,11 @@
+edit()
+startEdit()
+cd('JMSServers')
+if (ls().find('Test-JMSServer') == -1):
+  create('Test-JMSServer', 'JMSServer')
+cd('Test-JMSServer')
+set('Targets',jarray.array([getMBean('/Clusters/Test-Cluster'),getMBean('/Clusters/Test2-Cluster') ], Object))
+cd('..')
+cd('..')
+save()
+activate()
